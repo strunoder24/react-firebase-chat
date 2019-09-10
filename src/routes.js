@@ -5,7 +5,7 @@ let router = [
     {
         name: 'home',
         url: '/',
-        component: Hello,
+        component: Chat,
         exact: true
     },
 ];
