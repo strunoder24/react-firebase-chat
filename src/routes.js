@@ -22,7 +22,7 @@ let urlBuilder = function(name, params) {
     }
 
     let url = routesMap[name];
-
+// eslint-disable-next-line
     for (let key in params) {
         url = url.replace(':' + key, params[key]);
     }
