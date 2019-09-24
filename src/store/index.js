@@ -1,14 +1,9 @@
-import React from 'react';
+import Counter from './modules/testCounter'
 
-import { observable, action, computed } from 'mobx';
-
-
-class Auth {
-    isAuthenticated = observable(false);
-
-    authenticationStatus = action(status => {
-        this.isAuthenticated = status
-    });
+class RootStore {
+    constructor(){
+        this.counter = new Counter(this); //Передаём потомкам свой контекст чтобы они связывались друг с другом
+    }
 }
 
-export default Auth
+export default new RootStore();

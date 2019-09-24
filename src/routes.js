@@ -1,28 +1,35 @@
-import Chat from '~p/Chat';
+import React from 'react'
+import loadable from '@loadable/component'
 
+import Loading from '~c/loaders/ScriptLoading'
 
-let router = [
+const Chat = loadable(() => import('~p/Chat'), {
+    fallback: <Loading />,
+});
+
+let routes = [
     {
-        name: 'home',
+        name: 'chat',
         url: '/',
         component: Chat,
         exact: true
     },
 ];
 
+//Мапер по названиям роутов.
 let routesMap = {};
-
-router.forEach((route) => {
+routes.forEach((route) => {
     routesMap[route.name] = route.url
 });
 
-let urlBuilder = function(name, params) {
+//Улучшенная версия мапера выше, которая позволяет передавать параметры
+const urlBuilder = function(name, params) {
     if (!routesMap.hasOwnProperty(name)) {
         return null
     }
 
     let url = routesMap[name];
-// eslint-disable-next-line
+
     for (let key in params) {
         url = url.replace(':' + key, params[key]);
     }
@@ -31,5 +38,5 @@ let urlBuilder = function(name, params) {
 };
 
 
-export default router;
+export default routes;
 export { routesMap, urlBuilder };
