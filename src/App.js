@@ -1,56 +1,29 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
-import routes from './routes'
-import { observer } from 'mobx-react';
 
-import firebase from 'firebase'
+import Layout from '~/layouts/default'
+import routes from '~/routes'
+import '~/styles/styles.scss'
 
-// export default function () {
-//     let page = routes.map(route => (
-//         <Route path={route.url}
-//                component={route.component}
-//                exact={route.exact}
-//                key={route.url}
-//         />
-//     ));
-//
-//     return (
-//         <Router>
-//             <Switch>
-//                 { page }
-//             </Switch>
-//         </Router>
-//     );
-// }
-
-class App extends Component {
-    componentDidMount() {
-        firebase.auth().onAuthStateChanged(function(user) {
-            if (user) {
-                console.log('hey im logged');
-            } else {
-                console.log('Im ninja');
-            }
-        })
-    }
-
+export default class extends React.Component {
     render(){
-        let page = routes.map(route => (
-            <Route path={route.url}
-                   component={route.component}
-                   exact={route.exact}
-                   key={route.url}
+        let routesComponents = routes.map((route) => {
+            return <Route path={route.url}
+                          component={route.component}
+                          exact={route.exact}
+                          key={route.url}
             />
-        ));
+        });
 
         return (
             <Router>
-                <Switch>
-                    { page }
-                </Switch>
+                <Layout>
+                    <Switch>
+                        { routesComponents }
+                    </Switch>
+                </Layout>
             </Router>
-        );
+        )
     }
 }
 
-export default observer(App);
