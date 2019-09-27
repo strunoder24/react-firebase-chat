@@ -3,17 +3,26 @@ import loadable from '@loadable/component'
 
 import Loading from '~c/loaders/ScriptLoading'
 
-const Chat = loadable(() => import('~p/Chat'), {
+const Root = loadable(() => import('~p'), {
+    fallback: <Loading />,
+});
+const Auth = loadable(() => import('~p/Users/Auth'), {
     fallback: <Loading />,
 });
 
 let routes = [
     {
-        name: 'chat',
+        name: 'home',
         url: '/',
-        component: Chat,
+        component: Root,
         exact: true
     },
+    {
+        name: 'auth',
+        url: '/auth',
+        component: Auth,
+        exact: true
+    }
 ];
 
 //Мапер по названиям роутов.

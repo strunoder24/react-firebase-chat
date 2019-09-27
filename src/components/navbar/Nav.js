@@ -1,54 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import db from '~/firebase';
-import { observer } from 'mobx-react';
+import firebase from '~/firebase';
 
-// function Nav() {
-//     const [channels, setChannels] = useState([]);
-//
-//     useEffect(() => {
-//         return db.collection('channels').onSnapshot(snapshot => {
-//             const docs = [];
-//             snapshot.forEach(doc => {
-//                 docs.push({
-//                     ...doc.data(),
-//                     id: doc.id
-//                 });
-//             });
-//             setChannels(docs);
-//         });
-//     }, []);
-//
-//     return (
-//         <div className="Nav">
-//             <div className="User">
-//                 <img
-//                     className="UserImage"
-//                     alt="whatever"
-//                     src="https://placekitten.com/64/64"
-//                 />
-//                 <div>
-//                     <div>Ryan Florence</div>
-//                     <div>
-//                         <button className="text-button">log out</button>
-//                     </div>
-//                 </div>
-//             </div>
-//             <nav className="ChannelNav">
-//                 {channels.map(channel => (
-//                     <a key={channel.id} href={`/channel/${channel.id}`}># {channel.id}</a>
-//                 ))}
-//             </nav>
-//         </div>
-//     );
-// }
+import { observer, inject } from "mobx-react";
 
-export default class extends React.Component {
-    state = {
-        channels: [],
-    };
+export default inject('store')(observer(function (props) {
+    const [channels, setChannels] = useState([]);
 
-    componentDidMount() {
-        db.collection('channels').onSnapshot(snapshot => {
+    useEffect(() => {
+        return firebase.db.collection('channels').onSnapshot(snapshot => {
             const docs = [];
             snapshot.forEach(doc => {
                 docs.push({
@@ -56,34 +15,52 @@ export default class extends React.Component {
                     id: doc.id
                 });
             });
-            this.setState({
-                channels: docs
-            })
-        })
-    }
+            setChannels(docs);
+        });
+    }, []);
 
-    render(){
-        return (
-            <div className="Nav">
-                <div className="User">
+    const user = () => {
+        if (props.store.users.user) {
+            return (
+                <div>
                     <img
                         className="UserImage"
                         alt="whatever"
                         src="https://placekitten.com/64/64"
                     />
+                    <div>Logged user name</div>
                     <div>
-                        <div>Ryan Florence</div>
-                        <div>
-                            <button className="text-button">log out</button>
-                        </div>
+                        <button className="text-button">log out</button>
                     </div>
                 </div>
-                <nav className="ChannelNav">
-                    {this.state.channels.map(channel => (
-                        <a key={channel.id} href={`/channel/${channel.id}`}># {channel.id}</a>
-                    ))}
-                </nav>
+            )
+        } else {
+            return (
+                <div>
+                    <img
+                        className="UserImage"
+                        alt="whatever"
+                        src="https://placekitten.com/64/64"
+                    />
+                    <div>Anonymous</div>
+                    <div>
+                        <button className="text-button">log in</button>
+                    </div>
+                </div>
+            )
+        }
+    };
+
+    return (
+        <div className="Nav">
+            <div className="User">
+                { user() }
             </div>
-        );
-    }
-}
+            <nav className="ChannelNav">
+                {channels.map(channel => (
+                    <a key={channel.id} href={`/channel/${channel.id}`}># {channel.id}</a>
+                ))}
+            </nav>
+        </div>
+    );
+}))
