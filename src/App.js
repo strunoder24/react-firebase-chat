@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Layout from '~/layouts/default'
 import routes from '~/routes'
 import '~/styles/styles.scss'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class extends React.Component {
     render(){

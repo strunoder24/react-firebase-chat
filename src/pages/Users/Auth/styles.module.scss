@@ -1,0 +1,24 @@
+.auth-container {
+	width: 300px;
+	height: 350px;
+	margin: auto;
+	padding: 0 30px 30px;
+	border: 1px solid black;
+	border-radius: 5px;
+	box-shadow: 5px 8px 15px rgba(0,0,0,0.3);
+}
+
+.form-title {
+	padding-top: 10px;
+	padding-bottom: 20px;
+	font-size: 20px;
+}
+
+.buttonContainer {
+	display: flex;
+	width: 100%;
+};
+
+.actionButton {
+	margin-left: auto;
+}

@@ -18,8 +18,15 @@ let routes = [
         exact: true
     },
     {
-        name: 'auth',
-        url: '/auth',
+        name: 'signin',
+        url: '/signin',
+        component: Auth,
+        exact: true
+    },
+
+    {
+        name: 'signon',
+        url: '/signon',
         component: Auth,
         exact: true
     }
