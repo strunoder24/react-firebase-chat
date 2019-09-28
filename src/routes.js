@@ -25,8 +25,8 @@ let routes = [
     },
 
     {
-        name: 'signon',
-        url: '/signon',
+        name: 'signup',
+        url: '/signup',
         component: Auth,
         exact: true
     }

@@ -7,7 +7,7 @@ import Chat from '~p/Chat'
 export default @inject('store') @observer class extends React.Component {
     render() {
         if (this.props.store.users.userStateUpdated === 0) {
-            return <div />
+            return <div> can't reach user info </div>
         } else {
             return <Chat />
         }
